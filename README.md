@@ -6,6 +6,8 @@ Dự án Power BI Dashboard phân tích dữ liệu bán hàng của Adventure W
 
 **[Xem Dashboard trực tuyến](https://app.powerbi.com/reportEmbed?reportId=f337ad28-72a3-4800-938b-7e08ab906250&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f)**
 
+---
+
 ## Cấu trúc Dự án
 
 ```
@@ -28,16 +30,30 @@ Adventure_Works_Dashboard/
 ├── 3. Image/                         # Hình ảnh dashboard
 │   ├── Overview.png                 # Trang tổng quan
 │   ├── Customer.png                 # Trang phân tích khách hàng
-│   └── Product.png                  # Trang phân tích sản phẩm
+│   ├── Product.png                  # Trang phân tích sản phẩm
+│   └── DataModel.png                # Mô hình dữ liệu
 └── README.md                         # File này
 ```
 
-## Cấu trúc Dữ liệu
+---
+
+## Mô hình Dữ liệu
+
+Dashboard sử dụng mô hình **Star Schema** với:
+
+- **1 Fact Table**: Sales Data (kết nối với Returns Data)
+- **5 Dimension Tables**: Customer, Product, Calendar, Region, Product Categories/Subcategories
+
+Các quan hệ được thiết lập thông qua các khóa (Keys) giữa Fact Table và Dimension Tables.
+
+![Data Model](3.%20Image/DataModel.png)
 
 ### Fact Tables (Bảng Sự kiện)
 
 #### Sales Data (2020-2022)
+
 Dữ liệu giao dịch bán hàng trong 3 năm (2020-2022)
+
 - `OrderDate`: Ngày đặt hàng
 - `StockDate`: Ngày nhập kho
 - `OrderNumber`: Số đơn hàng
@@ -48,7 +64,9 @@ Dữ liệu giao dịch bán hàng trong 3 năm (2020-2022)
 - `OrderQuantity`: Số lượng đặt hàng
 
 #### Returns Data
+
 Dữ liệu trả hàng
+
 - `ReturnDate`: Ngày trả hàng
 - `TerritoryKey`: Khóa khu vực
 - `ProductKey`: Khóa sản phẩm
@@ -57,56 +75,82 @@ Dữ liệu trả hàng
 ### Dimension Tables (Bảng Chiều)
 
 #### Customer Lookup
+
 Thông tin chi tiết về khách hàng
+
 - Thông tin cá nhân: `CustomerKey`, `Prefix`, `FirstName`, `LastName`, `BirthDate`
 - Nhân khẩu học: `MaritalStatus`, `Gender`, `EmailAddress`
 - Kinh tế xã hội: `AnnualIncome`, `TotalChildren`, `EducationLevel`, `Occupation`, `HomeOwner`
 
 #### Product Lookup
+
 Thông tin sản phẩm
+
 - `ProductKey`, `ProductSubcategoryKey`, `ProductSKU`
 - `ProductName`, `ModelName`, `ProductDescription`
 - `ProductColor`, `ProductSize`, `ProductStyle`
 - `ProductCost`, `ProductPrice`
 
 #### Product Categories & Subcategories
+
 Phân loại sản phẩm
+
 - **Categories**: Bikes, Components, Clothing, Accessories
 - **Subcategories**: 37 subcategories bao gồm Mountain Bikes, Road Bikes, Helmets, Jerseys, Socks, v.v.
 
 #### Region
+
 Thông tin địa lý
+
 - `SalesTerritoryKey`, `Region`, `Country`, `Continent`
 - **11 Territories**: 6 vùng Hoa Kỳ, Canada, France, Germany, Australia, United Kingdom
 
 #### Calendar Lookup
+
 Bảng ngày tháng để phân tích theo thời gian
+
 - `Date`: Ngày trong khoảng thời gian từ 2020-2022
+
+---
 
 ## Các Trang Dashboard
 
 ### 1. Overview (Tổng quan)
+
 Trang tổng quan cung cấp cái nhìn tổng thể về hiệu suất kinh doanh:
+
 - Tổng doanh thu, số lượng đơn hàng, số lượng sản phẩm bán ra
 - Phân tích xu hướng theo thời gian
 - Phân tích theo khu vực địa lý
 - Top sản phẩm bán chạy
 - Phân tích trả hàng
 
+![Overview Dashboard](3.%20Image/Overview.png)
+
 ### 2. Customer (Khách hàng)
+
 Trang phân tích khách hàng tập trung vào:
+
 - Phân tích nhân khẩu học (giới tính, độ tuổi, tình trạng hôn nhân)
 - Phân tích theo thu nhập và nghề nghiệp
 - Phân tích hành vi mua hàng theo nhóm khách hàng
 - Customer segmentation
 
+![Customer Dashboard](3.%20Image/Customer.png)
+
 ### 3. Product (Sản phẩm)
+
 Trang phân tích sản phẩm bao gồm:
+
 - Phân tích doanh thu và lợi nhuận theo danh mục
 - Top sản phẩm bán chạy
 - Phân tích theo màu sắc, kích thước, style
 - Tỷ lệ trả hàng theo sản phẩm
 - Phân tích margin (lợi nhuận)
+
+![Product Dashboard](3.%20Image/Product.png)
+
+---
 
 ## Công nghệ Sử dụng
 
@@ -115,13 +159,7 @@ Trang phân tích sản phẩm bao gồm:
 - **CSV Files**: Dữ liệu nguồn dạng CSV
 - **DAX (Data Analysis Expressions)**: Để tạo các measures và calculated columns
 
-## Mô hình Dữ liệu
-
-Dashboard sử dụng mô hình **Star Schema** với:
-- **1 Fact Table**: Sales Data (kết nối với Returns Data)
-- **5 Dimension Tables**: Customer, Product, Calendar, Region, Product Categories/Subcategories
-
-Các quan hệ được thiết lập thông qua các khóa (Keys) giữa Fact Table và Dimension Tables.
+---
 
 ## Hướng dẫn Sử dụng
 
@@ -135,6 +173,8 @@ Các quan hệ được thiết lập thông qua các khóa (Keys) giữa Fact T
 
 Truy cập link: [Xem Dashboard](https://app.powerbi.com/reportEmbed?reportId=f337ad28-72a3-4800-938b-7e08ab906250&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f)
 
+---
+
 ## Ghi chú
 
 - Dữ liệu bao phủ 3 năm: 2020, 2021, 2022
@@ -142,7 +182,9 @@ Truy cập link: [Xem Dashboard](https://app.powerbi.com/reportEmbed?reportId=f3
 - Có thể drill-down vào chi tiết từ các visualizations
 - Tất cả các measures và calculations được tối ưu hóa cho hiệu suất
 
-## Tác giả
+---
+
+## 👤 Tác giả
 
 Dự án được phát triển cho mục đích học tập và phân tích dữ liệu bán hàng.
 
